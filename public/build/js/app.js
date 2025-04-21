@@ -1,0 +1,1 @@
+function initPasswordToggles(){document.querySelectorAll('[data-toggle="password"]').forEach((t=>{const e=t.getAttribute("data-target"),o=document.getElementById(e);o&&t.addEventListener("click",(()=>{const e="password"===o.type;o.type=e?"text":"password",t.textContent=e?"🙈":"👁️"}))}))}document.addEventListener("DOMContentLoaded",(()=>{initPasswordToggles()}));
