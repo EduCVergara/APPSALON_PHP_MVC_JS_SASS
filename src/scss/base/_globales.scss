@@ -9,7 +9,8 @@ body {
     min-height: 100%;
     display: flex;
     flex-direction: column;
-    background-color: v.$negro;
+    // background-color: v.$negro;
+    background: linear-gradient(to bottom, #0F1316, #1D2A32);
     color: v.$blanco;
 }
 *, *:before, *:after {

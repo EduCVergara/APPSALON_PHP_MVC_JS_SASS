@@ -1,5 +1,6 @@
 @use 'base/variables' as *;
 @use 'base/mixins' as *;
+@use 'sass:color';
 
 .acciones {
 
@@ -14,5 +15,9 @@
         display: block;
         margin-bottom: calc($separacion / 2);
         text-align: center;
+        transition: color .2s ease-in-out;
+        &:hover {
+            color: color.adjust($azul, $lightness: 20%);
+        }
     }
 }

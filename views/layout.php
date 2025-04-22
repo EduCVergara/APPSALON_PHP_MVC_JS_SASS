@@ -11,6 +11,7 @@
     <div class="contenedor-app">
         <div class="imagen"></div>
         <div class="app">
+            <div class="logo"></div>
             <?php echo $contenido; ?>
         </div>
     </div>
