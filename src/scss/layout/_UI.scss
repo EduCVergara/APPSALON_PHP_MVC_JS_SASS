@@ -21,15 +21,18 @@
     .app {
         width: 95%;
         margin: 0 auto;
-        padding: 3rem 0;
+        padding: 0 0 5rem 0;
         .logo {
-            background-image: url('../img/BARBER-APP-LOGO-2.webp');
-            background-size: cover;
-            background-position: center center;
-            width: 45rem;
-            height: 20rem;
+            text-align: center;
+            width: 25rem;
+            max-height: 18rem;
             margin: 0 auto;
-        }
+            overflow: hidden;
+            @include telefono {
+                width: 30rem;
+                max-height: 22rem;
+            }
+          }
     }
 }
 

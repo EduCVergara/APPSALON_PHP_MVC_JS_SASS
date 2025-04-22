@@ -3,13 +3,12 @@
 html {
     font-size: 62.5%;
     box-sizing: border-box;
-    height: 100%;
+    // height: 100%; // cortaba el linear gradient
 }
 body {
     min-height: 100%;
     display: flex;
     flex-direction: column;
-    // background-color: v.$negro;
     background: linear-gradient(to bottom, #0F1316, #1D2A32);
     color: v.$blanco;
 }

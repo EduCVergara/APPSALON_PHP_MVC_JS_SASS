@@ -1,6 +1,14 @@
 <?php
 
-$db = mysqli_connect('localhost', 'root', 'root', 'appsalon_mvc');
+// Obtiene las variables de entorno definidas en Railway
+$host = getenv('MYSQLHOST');
+$user = getenv('MYSQLUSER');
+$password = getenv('MYSQLPASSWORD');
+$database = getenv('MYSQLDATABASE');
+$port = getenv('MYSQLPORT');
+
+// $db = mysqli_connect('localhost', 'root', 'root', 'appsalon_mvc');
+$db = new mysqli($host, $user, $password, $database, (int)$port);
 
 
 if (!$db) {

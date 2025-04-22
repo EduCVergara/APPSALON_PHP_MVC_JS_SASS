@@ -11,7 +11,13 @@
     <div class="contenedor-app">
         <div class="imagen"></div>
         <div class="app">
-            <div class="logo"></div>
+            <div class="logo">
+                <picture>
+                    <source srcset="build/img/BARBER-APP-LOGO-2.avif" type="image/avif">
+                    <source srcset="build/img/BARBER-APP-LOGO-2.webp" type="image/webp">
+                    <img src="build/img/BARBER-APP-LOGO-2.png" alt="Gentlemen's Barber Logo">
+                </picture>
+            </div>
             <?php echo $contenido; ?>
         </div>
     </div>
