@@ -1,0 +1,29 @@
+@use 'base/variables' as *;
+@use 'base/mixins' as *;
+@use 'sass:color';
+
+.tabs {
+
+    @include tablet {
+        display: flex;
+    }
+    button {
+        background-color: $azul;
+        cursor: pointer;
+        border: none;
+        color: $blanco;
+        padding: 1rem;
+        display: block;
+        width: 100%;
+        margin-bottom: 1rem;
+        font-weight: bold;
+        transition: all .3s ease-in-out;
+        &:hover {
+            background-color: color.adjust($azul, $lightness: -10%);
+        }
+        &.actual {
+            background-color: $blanco;
+            color: $azul;
+        }
+    }
+}

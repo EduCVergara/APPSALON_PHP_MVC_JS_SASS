@@ -68,3 +68,5 @@
     <a href="/">¿Ya tienes una cuenta? Inicia Sesión</a>
     <a href="/olvido">¿Olvidaste tu clave? ¡Recupérala Aquí!</a>
 </div>
+
+<?php $script = "<script src='build/js/app.js'></script>"; ?>

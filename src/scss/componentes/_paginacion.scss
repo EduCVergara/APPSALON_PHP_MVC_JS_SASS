@@ -1,0 +1,16 @@
+@use 'base/variables' as *;
+@use 'base/mixins' as *;
+
+.paginacion {
+    padding: $separacion 0;
+
+    @include telefono {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    button {
+        border-radius: 3rem;
+        margin: 0 0 .5rem 0;
+    }
+}
