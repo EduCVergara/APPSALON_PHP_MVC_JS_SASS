@@ -7,8 +7,10 @@ $password = getenv('MYSQLPASSWORD');
 $database = getenv('MYSQLDATABASE');
 $port = getenv('MYSQLPORT');
 
-// $db = mysqli_connect('localhost', 'root', 'root', 'appsalon_mvc');
 $db = new mysqli($host, $user, $password, $database, (int)$port);
+// $db = mysqli_connect('localhost', 'root', 'root', 'appsalon_mvc');
+$db->set_charset("utf8");
+
 
 
 if (!$db) {
