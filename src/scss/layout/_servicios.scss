@@ -16,6 +16,14 @@
         transition: transform .2s ease-in;
         text-align: center;
 
+        &.seleccionado {
+            background-color: $azul;
+            p {
+                color: $blanco;
+            }
+            
+        }
+
         &:hover {
             transform: scale(1.05);
             cursor: pointer;

@@ -24,6 +24,14 @@ let paso = 1;
 const pasoInicial = 1;
 const pasoFinal = 3;
 
+const cita = {
+  // por default, los objetos en javascript funcionan como un let, lo que significa que podemos reescribir en ellos sin problemas
+  nombre: '',
+  fecha: '',
+  hora: '',
+  servicios: []
+}
+
 function iniciarApp() {
   mostrarSeccion(); // Muestra y oculta las secciones
   tabs(); // Cambia la sección cuando se presionan los tabs
@@ -32,6 +40,9 @@ function iniciarApp() {
   paginaAnterior();
 
   consultarAPI(); // Consulta la API en el Backend de PHP
+
+  nombreCliente(); // añade el nombre del cliente al objeto de cita
+  seleccionarFecha(); // añade la fecha de la cita al objeto
 }
 
 function mostrarSeccion() {
@@ -130,6 +141,9 @@ function mostrarServicios(servicios) {
     const servicioDiv = document.createElement('DIV');
     servicioDiv.classList.add('servicio');
     servicioDiv.dataset.idServicio = id; // crear atributo personalizado
+    servicioDiv.onclick = function() {
+      seleccionarServicio(servicio);
+    };
 
     servicioDiv.appendChild(nombreServicio);
     servicioDiv.appendChild(precioServicio);
@@ -137,4 +151,63 @@ function mostrarServicios(servicios) {
     document.querySelector('#servicios').appendChild(servicioDiv); // Buscamos el div con el id servicios y le insertamos el div con los servicios
     
   })
+}
+
+function seleccionarServicio(servicio) {
+  const { id } = servicio;
+  const { servicios } = cita;
+  // identifica el elemento al que se le da click
+  const divServicio = document.querySelector(`[data-id-servicio="${id}"]`);
+
+  // Comprobar si el servicio ya fué agregado
+  if (servicios.some(agregado => agregado.id === id)) { //Itera sobre el arreglo y verifica si un elemento existe en ese arreglo
+    //Eliminarlo si está agregado
+    cita.servicios = servicios.filter(agregado => agregado.id !== id); // permite sacar un elemento según un filtro
+    divServicio.classList.remove('seleccionado');
+  } else {
+    //Agregarlo si no está
+    cita.servicios = [...servicios, servicio];
+    divServicio.classList.add('seleccionado');
+  }
+  console.log(cita);
+}
+
+function nombreCliente() {
+  const nombre = document.querySelector('#nombre').value;
+  cita.nombre = nombre;
+  console.log(nombre);
+}
+
+function seleccionarFecha() {
+  const inputFecha = document.querySelector('#fecha');
+  inputFecha.addEventListener('input', function(e) {
+
+    const dia = new Date(e.target.value).getUTCDay();
+    if ([6, 0].includes(dia)) {
+      e.target.value = '';
+      mostrarAlerta('Fecha fuera de horario laboral', 'error');
+    } else {
+      cita.fecha = e.target.value;
+    }
+  })
+}
+
+function mostrarAlerta(mensaje, tipo) {
+
+  // previene que se genere más de una alerta
+  const alertaPrevia = document.querySelector('.alerta');
+  if (alertaPrevia) return;
+
+  const alerta = document.createElement('DIV');
+  alerta.textContent = mensaje;
+  alerta.classList.add('alerta');
+  alerta.classList.add(tipo);
+
+  const formulario = document.querySelector('.formulario');
+  formulario.appendChild(alerta);
+
+  // Elimina la alerta luego de 2seg
+  setTimeout(() => {
+    alerta.remove();
+  }, 2000)
 }
