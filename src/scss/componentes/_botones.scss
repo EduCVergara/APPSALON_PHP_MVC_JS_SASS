@@ -4,3 +4,21 @@
 .boton {
     @include boton($azul, $blanco);
 }
+
+.boton-80percent {
+    width: 80%;
+    margin: 0 auto;
+    padding: 1.5rem;
+    border-radius: .5rem;
+
+    @include boton($azul, $blanco);
+
+    @include tablet {
+        width: auto;
+    }
+
+    &:hover {
+        background-color: $blanco;
+        color: $azul;
+    }
+}
