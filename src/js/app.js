@@ -116,7 +116,11 @@ function paginaSiguiente() {
 
 async function consultarAPI() { // Ejecutar dos funciones simultáneamente (Async)
   try {
-    const url = 'http://localhost:3000/api/servicios';
+    const baseURL = window.location.hostname.includes('localhost')
+      ? 'http://localhost:3000'
+      : ''; // En producción, usa la misma raíz
+
+    const url = `${baseURL}/api/servicios`;
     const resultado = await fetch(url); // Await espera a que termine el fetch para seguir avanzando
     const servicios = await resultado.json();
     mostrarServicios(servicios);
@@ -169,7 +173,7 @@ function seleccionarServicio(servicio) {
     cita.servicios = [...servicios, servicio];
     divServicio.classList.add('seleccionado');
   }
-  
+
   console.log(cita);
 }
 
