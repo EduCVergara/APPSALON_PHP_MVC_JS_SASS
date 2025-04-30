@@ -43,6 +43,9 @@ function iniciarApp() {
 
   nombreCliente(); // añade el nombre del cliente al objeto de cita
   seleccionarFecha(); // añade la fecha de la cita al objeto
+  seleccionarHora(); // añade la hora de la cita al objeto
+
+  mostrarResumen(); // Muestra el resumen de la cita
 }
 
 function mostrarSeccion() {
@@ -88,6 +91,7 @@ function botonesPaginador() {
   } else if (paso === 3) {
     paginaAnterior.classList.remove('ocultar');
     paginaSiguiente.classList.add('ocultar');
+    mostrarResumen();
   } else {
     paginaAnterior.classList.remove('ocultar');
     paginaSiguiente.classList.remove('ocultar');
@@ -190,11 +194,29 @@ function seleccionarFecha() {
     const dia = new Date(e.target.value).getUTCDay();
     if ([6, 0].includes(dia)) {
       e.target.value = '';
-      mostrarAlerta('Fecha fuera de horario laboral', 'error');
+      mostrarAlerta('Fecha fuera de días de trabajo', 'error');
     } else {
       cita.fecha = e.target.value;
     }
   })
+}
+
+function seleccionarHora() {
+
+  const inputHora = document.querySelector('#hora');
+  inputHora.addEventListener('input', function(e) {
+    
+    const horaCita = e.target.value;
+    const hora = horaCita.split(":")[0];
+
+    if (hora < 10 || hora > 18) { // Establecer horario de trabajo del local
+      e.target.value = '';
+      mostrarAlerta('Hora seleccionada fuera de horario laboral', 'error');
+    } else {
+      cita.hora = e.target.value;
+    }
+  })
+
 }
 
 function mostrarAlerta(mensaje, tipo) {
@@ -215,4 +237,14 @@ function mostrarAlerta(mensaje, tipo) {
   setTimeout(() => {
     alerta.remove();
   }, 2000)
+}
+
+function mostrarResumen() {
+  const resumen = document.querySelector('.contenido-resumen');
+
+  if (Object.values(cita).includes('') ) {
+    mostrarAlerta('Debe rellenar todos los campos anteriores antes de seguir', 'error');
+  } else {
+
+  }
 }
