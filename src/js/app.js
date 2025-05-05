@@ -26,6 +26,7 @@ const pasoFinal = 3;
 
 const cita = {
   // por default, los objetos en javascript funcionan como un let, lo que significa que podemos reescribir en ellos sin problemas
+  id: '',
   nombre: '',
   fecha: '',
   hora: '',
@@ -41,6 +42,7 @@ function iniciarApp() {
 
   consultarAPI(); // Consulta la API en el Backend de PHP
 
+  idCliente(); // añade el id del cliente al objeto de cita
   nombreCliente(); // añade el nombre del cliente al objeto de cita
   seleccionarFecha(); // añade la fecha de la cita al objeto
   seleccionarHora(); // añade la hora de la cita al objeto
@@ -178,13 +180,14 @@ function seleccionarServicio(servicio) {
     divServicio.classList.add('seleccionado');
   }
 
-  console.log(cita);
 }
 
 function nombreCliente() {
-  const nombre = document.querySelector('#nombre').value;
-  cita.nombre = nombre;
-  console.log(nombre);
+  cita.nombre = document.querySelector('#nombre').value;
+}
+
+function idCliente() {
+  cita.id = document.querySelector('#id').value;
 }
 
 function seleccionarFecha() {
@@ -194,7 +197,7 @@ function seleccionarFecha() {
     const dia = new Date(e.target.value).getUTCDay();
     if ([6, 0].includes(dia)) {
       e.target.value = '';
-      mostrarAlerta('Fecha fuera de días de trabajo', 'error');
+      mostrarAlerta('Fecha fuera de días de trabajo', 'error', '.formulario');
     } else {
       cita.fecha = e.target.value;
     }
@@ -209,9 +212,9 @@ function seleccionarHora() {
     const horaCita = e.target.value;
     const hora = horaCita.split(":")[0];
 
-    if (hora < 10 || hora > 18) { // Establecer horario de trabajo del local
+    if (hora < 10 || hora > 17) { // Establecer horario de trabajo del local de 10 a 18 hrs
       e.target.value = '';
-      mostrarAlerta('Hora seleccionada fuera de horario laboral', 'error');
+      mostrarAlerta('Trabajamos de 10:00 AM a 18:00 PM', 'error', '.formulario');
     } else {
       cita.hora = e.target.value;
     }
@@ -219,32 +222,158 @@ function seleccionarHora() {
 
 }
 
-function mostrarAlerta(mensaje, tipo) {
+function mostrarAlerta(mensaje, tipo, elemento, desaparece = true) {
 
   // previene que se genere más de una alerta
   const alertaPrevia = document.querySelector('.alerta');
-  if (alertaPrevia) return;
+  if (alertaPrevia) {
+    alertaPrevia.remove();
+  };
 
   const alerta = document.createElement('DIV');
   alerta.textContent = mensaje;
   alerta.classList.add('alerta');
   alerta.classList.add(tipo);
 
-  const formulario = document.querySelector('.formulario');
-  formulario.appendChild(alerta);
+  const referencia = document.querySelector(elemento);
+  referencia.appendChild(alerta);
 
-  // Elimina la alerta luego de 2seg
-  setTimeout(() => {
-    alerta.remove();
-  }, 2000)
+  if (desaparece) {
+      // Elimina la alerta luego de 2seg
+    setTimeout(() => {
+      alerta.remove();
+    }, 2000)
+  }
 }
 
 function mostrarResumen() {
   const resumen = document.querySelector('.contenido-resumen');
 
-  if (Object.values(cita).includes('') ) {
-    mostrarAlerta('Debe rellenar todos los campos anteriores antes de seguir', 'error');
-  } else {
+  // Limpiar contenido de resumen
+  while (resumen.firstChild) {
+    resumen.removeChild(resumen.firstChild);
+  }
 
+  if (Object.values(cita).includes('') || cita.servicios.length === 0 ) {
+    mostrarAlerta('Hacen falta datos por rellenar o servicios por seleccionar', 'error', '.contenido-resumen', false);
+
+    return;
+  }
+  
+  // Formatear el div de Resumen
+  const { nombre, fecha, hora, servicios } = cita; //Destructuring, extraemos los datos de cita
+
+  // Heading para Datos de la Cita en resumen
+  const headingCita = document.createElement('H3');
+  headingCita.textContent = 'Resumen de Datos de la Cita';
+  resumen.appendChild(headingCita);
+
+  const nombreCliente = document.createElement('P');
+  nombreCliente.innerHTML = `<span>Nombre: </span>${nombre}`;
+
+  // ---------------------------Formateo de Fecha -------------------------- //
+  const fechaObj = new Date(fecha);
+  const mes = fechaObj.getMonth();
+  const dia = fechaObj.getDate() + 2;
+  const year = fechaObj.getFullYear();
+
+  const fechaUTC = new Date(Date.UTC(year, mes, dia));
+
+  const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
+  const fechaFormateada = fechaUTC.toLocaleDateString('es-AR', opciones);
+
+  const fechaCita = document.createElement('P');
+  fechaCita.innerHTML = `<span>Fecha: </span>${fechaFormateada}`;
+  // ---------------------------Formateo de Fecha -------------------------- //
+
+  const horaCita = document.createElement('P');
+  horaCita.innerHTML = `<span>Hora: </span>${hora} hrs.`;
+
+  // Botón para crear una cita
+  const botonReservar = document.createElement('BUTTON');
+  botonReservar.classList.add('boton');
+  botonReservar.textContent = 'Reservar Hora';
+  botonReservar.onclick = reservarCita;
+
+
+  resumen.appendChild(nombreCliente);
+  resumen.appendChild(fechaCita);
+  resumen.appendChild(horaCita);
+
+  // Heading para servicios en resumen
+  const headingServicios = document.createElement('H3');
+  headingServicios.textContent = 'Resumen de Servicios Solicitados';
+  resumen.appendChild(headingServicios);
+
+  let total = 0;
+
+  // Iterar y mostrar servicios
+  servicios.forEach(servicio => {
+    const { id, precio, nombre } = servicio; //Destructuring a servicio para saber los datos del servicio en cuestión
+    const contenedorServicio = document.createElement('DIV');
+    contenedorServicio.classList.add('contenedor-servicio');
+
+    const nombreServicio = document.createElement('P');
+    nombreServicio.textContent = nombre;
+
+    const precioServicio = document.createElement('P');
+    precioServicio.innerHTML = `<span>Costo: </span>$${precio}`;
+
+    contenedorServicio.appendChild(nombreServicio);
+    contenedorServicio.appendChild(precioServicio);
+
+    resumen.appendChild(contenedorServicio);
+
+    total += parseFloat(precio);
+  })
+
+  const headingTotal = document.createElement('H3');
+  headingTotal.innerHTML = `<span>Valor Total: <span><strong><h3>$${total}</h3></strong>`;
+
+  resumen.appendChild(headingTotal);
+  resumen.appendChild(botonReservar);
+}
+
+async function reservarCita() {
+  const datos = new FormData();
+  const { nombre, fecha, hora, servicios, id } = cita;
+
+  const idServicios = servicios.map( servicio => servicio.id );
+
+  datos.append('fecha', fecha);
+  datos.append('hora', hora);
+  datos.append('usuarioId', id);
+  datos.append('servicios', idServicios);
+
+  console.log([...datos]); // console log para saber qué datos me está entregando el FormData.
+
+  try {
+      // Petición hacia la API
+    const url = 'http://localhost:3000/api/citas';
+
+    const respuesta = await fetch(url, {
+      method: 'POST',
+      body: datos // body: Cuerpo de la petición que se va a enviar
+    });
+
+    const resultado = await respuesta.json();
+    console.log(resultado.resultado);
+
+    if (resultado.resultado) {
+      Swal.fire({
+        icon: 'success',
+        title: 'Cita Creada',
+        text: 'Tu hora se ha reservado correctamente!',
+        button: 'OK'
+      }).then( () => {
+        window.location.reload(); //recarga la página
+      })
+    }
+  } catch (error) {
+    Swal.fire({
+      icon: "error",
+      title: "Error",
+      text: "Hubo un error al guardar la cita"
+    });
   }
 }
