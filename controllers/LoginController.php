@@ -31,7 +31,7 @@ class LoginController {
                         $_SESSION['id'] = $usuario->id;
                         $_SESSION['nombre'] = $usuario->nombre . " " . $usuario->apellido;
                         $_SESSION['email'] = $usuario->email;
-                        $_SESISON['login'] = true;
+                        $_SESSION['login'] = true;
 
                         // Redireccionamiento si es admin o no
 
@@ -83,7 +83,7 @@ class LoginController {
                     $usuario->guardar();
 
                     // Enviar EMail
-                    $email = new Email($usuario->nombre, $usuario->email, $usuario->token);
+                    $email = new Email($usuario->email, $usuario->nombre, $usuario->token);
                     $email->enviarInstrucciones();
 
                     Usuario::setAlerta('exito', "Se han enviado las instrucciones al correo: <strong>{$auth->email}</strong> para restablecer tu contraseña.");
@@ -127,6 +127,7 @@ class LoginController {
                 $resultado = $usuario->guardar();
                 if ($resultado) {
                     header('Location: /');
+                    exit;
                 }
             }
         }
@@ -172,6 +173,7 @@ class LoginController {
                     $resultado = $usuario->guardar();
                     if ($resultado) {
                         header('Location: /mensaje');
+                        exit;
                     }
                 }
             }
