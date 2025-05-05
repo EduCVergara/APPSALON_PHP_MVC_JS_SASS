@@ -347,11 +347,14 @@ async function reservarCita() {
 
   console.log([...datos]); // console log para saber qué datos me está entregando el FormData.
 
+  // Determina la URL base según dónde estés corriendo la app
+  const API_BASE_URL = window.location.hostname === 'localhost'
+  ? 'http://localhost:3000'
+  : 'https://barberapp.up.railway.app';
+
   try {
       // Petición hacia la API
-    const url = 'http://localhost:3000/api/citas';
-
-    const respuesta = await fetch(url, {
+    const respuesta = await fetch(`${API_BASE_URL}/api/citas`, {
       method: 'POST',
       body: datos // body: Cuerpo de la petición que se va a enviar
     });
