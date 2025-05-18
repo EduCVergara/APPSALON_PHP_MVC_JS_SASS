@@ -1,5 +1,6 @@
 @use 'base/variables' as *;
 @use 'base/mixins' as *;
+@use 'sass:color';
 
 .contenedor-app {
     @include tablet {
@@ -57,3 +58,46 @@
       padding: 0;
     }
   }
+
+.barra {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    margin: .5rem auto;
+    padding: .8rem;
+    border-radius: 1rem;
+    background-color: color.adjust($azul, $lightness: -25%);
+
+    p {
+        display: inline-block;
+        margin: 0 auto;
+        text-align: center;
+
+        @include tablet {
+            margin: 0;
+        }
+    }
+
+    .boton {
+        width: 60%;
+        margin: .3rem auto;
+        padding: 1rem 2rem;
+        border-radius: 1.5rem;
+        background-color: color.adjust($rojo, $lightness: -10%);
+
+        &:hover {
+            background-color: color.adjust($rojo, $lightness: -15%);
+        }
+
+        @include tablet {
+            width: auto;
+            margin: 0;
+        }
+    }
+
+    @include tablet {
+        flex-direction: row;
+        margin: .5rem 0;
+    }
+}

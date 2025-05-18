@@ -1,4 +1,10 @@
 <h1 class="nombre-pagina">Crear Nueva Cita</h1>
+
+<div class="barra">
+    <p>Bienvenido: <strong><?php echo $_SESSION['nombre']; ?></strong></p>
+    <a class="boton" href="\logout">Cerrar Sesión</a>
+</div>
+
 <p class="descripcion-pagina">Elige tus servicios y coloca tus datos</p>
 
 <div id="app">
