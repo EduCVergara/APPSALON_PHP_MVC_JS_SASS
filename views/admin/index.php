@@ -19,22 +19,44 @@
 <div id="citas-admin">
     <ul class="citas">
         <?php
-            $idCita = 0;
-            foreach ($citas as $cita) {
-                if ($idCita !== $cita->id) {
+        $idCita = 0;
+        foreach ($citas as $key => $cita) {
+            
+            if ($idCita !== $cita->id) {
+                $total = 0;
         ?>
-        <li>
-            <p>ID: <span><?php echo $cita->id; ?></span></p>
-            <p>Hora: <span><?php echo $cita->hora; ?></span></p>
-            <p>Cliente: <span><?php echo $cita->cliente; ?></span></p>
-            <p>Correo electrónico: <span><?php echo $cita->email; ?></span></p>
-            <p>Teléfono: <span><?php echo $cita->telefono; ?></span></p>
+            <li class="cita">
+                <p>ID: <span><?php echo $cita->id; ?></span></p>
+                <p>Hora: <span><?php echo $cita->hora; ?></span></p>
+                <p>Cliente: <span><?php echo $cita->cliente; ?></span></p>
+                <p>Correo electrónico: <span><?php echo $cita->email; ?></span></p>
+                <p>Teléfono: <span><?php echo $cita->telefono; ?></span></p>
+                <fieldset>
+                <legend><h3>Servicios</h3></legend>
+                <ul class="contenedor-servicios">
+        <?php
+                $idCita = $cita->id;
+            }
 
-            <h3>Servicios</h3>
-        <?php $idCita = $cita->id; 
-        } // fin if ?>
-            <p class="servicio"><?php echo $cita->servicio . ' ' . $cita->precio; ?></p>
-        <?php 
-            } //fin foreach ?>
+            $total += $cita->precio;
+        ?>
+                    <li class="servicio">
+                        <?php echo $cita->servicio; ?> - 
+                        <span class="precio">$ <?php echo $cita->precio; ?></span>
+                    </li>
+        <?php
+            $actual = $cita->id;
+            $proximo = $citas[$key + 1]->id ?? 0;
+
+            if (esUltimo($actual, $proximo)) {
+        ?>
+                </ul>
+                </fieldset>
+                <p class="total">Total: <span>$<?php echo $total; ?></span></p>
+            </li>
+        <?php
+            }
+        }
+        ?>
     </ul>
 </div>

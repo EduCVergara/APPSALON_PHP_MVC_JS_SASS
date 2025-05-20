@@ -6,7 +6,7 @@
   list-style: none;
   padding: 0;
 
-  li {
+  .cita {
     padding: 1.5rem;
     margin-bottom: 1.5rem;
     background-color: color.adjust($azul, $lightness: -33%);
@@ -14,42 +14,79 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease, transform 0.2s ease;
 
-    p {
-      font-weight: bold;
-      color: $azul;
-      margin-bottom: 0.25rem;
-    }
-
-    span,
-    .servicio {
-      font-weight: $regular;
-      color: $blanco;
-      display: block;
-      margin-bottom: 0.5rem;
-    }
-
-    h3 {
-      text-align: left;
-      margin-top: 1rem;
-      color: $blanco;
+    &:nth-child(odd) {
+      background-color: color.adjust($azul, $lightness: -40%);
     }
 
     &:hover {
       transform: scale(1.01);
     }
 
-    // Alterna color para pares/impares
-    &:nth-child(odd) {
+    p {
+      font-weight: bold;
+      color: $azul;
+      margin-bottom: 0.25rem;
+
+      span {
+        color: $blanco;
+        font-weight: normal;
+      }
+    }
+
+    fieldset {
+      border-radius: 1.5rem;
+      background-color: color.adjust($azul, $lightness: -20%);
+    }
+
+    h3 {
+      text-align: left;
+      margin-top: .5rem;
+      color: $blanco;
+      margin-bottom: 0;
+      padding: .5rem 1rem;
       background-color: color.adjust($azul, $lightness: -40%);
+      border-radius: 1rem;
+    }
+
+    .contenedor-servicios {
+      list-style: disc;
+      list-style-position: inside;
+      margin-left: 1rem;
+      padding: .5rem 1rem;
+      border-radius: 1rem;
+
+      .servicio {
+
+        .precio {
+          background-color: color.adjust($azul, $lightness: -20%);
+          padding: 0.3rem 0rem;
+          border-radius: 0.6rem;
+          margin-left: 0.5rem;
+          display: inline-block;
+          font-weight: bold;
+        }
+
+        color: $blanco;
+        margin-bottom: 0.5rem;
+        font-weight: $regular;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    .total {
+      margin-top: 1rem;
+      font-weight: bold;
+      color: $azul;
+      text-align: right;
+      font-size: 2.5rem;
+      span {
+        color: $blanco;
+        font-weight: bold;
+      }
     }
   }
-}
-
-input[type="date"] {
-  padding: 0.8rem 1rem;
-  border: none;
-  border-radius: 0.5rem;
-  background-color: #fff;
-  color: #000;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
