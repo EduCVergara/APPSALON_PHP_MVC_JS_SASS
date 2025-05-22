@@ -22,3 +22,16 @@
         color: $azul;
     }
 }
+
+.boton-eliminar {
+    @include boton($rojo, $blanco);
+    
+    & {
+        border-radius: .5rem;
+        display: inline-block;
+        margin: 0;
+        font-size: 1.6rem;
+        padding: 1rem 3rem;
+        }
+    
+}

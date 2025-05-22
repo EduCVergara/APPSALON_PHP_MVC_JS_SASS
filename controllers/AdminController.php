@@ -7,10 +7,20 @@ use MVC\Router;
 
 class AdminController {
     public static function index(Router $router) {
+        
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
         isAuth();
+        
+        // Establecemos la timezone para el país correspondiente
+        date_default_timezone_set('America/Santiago');
+        $fecha = $_GET['fecha'] ?? date('Y-m-d');
+        $fechaSep = explode('-', $fecha);
+
+        if(!checkdate($fechaSep[1], $fechaSep[2], $fechaSep[0])) {
+            header('Location: /404');
+        }
 
         // Consultar la base de datos
         $consulta = "SELECT c.id, c.hora, concat(u.nombre, ' ', u.apellido) cliente, ";
@@ -22,13 +32,14 @@ class AdminController {
         $consulta .= "ON cs.citaId = c.id ";
         $consulta .= "LEFT OUTER JOIN servicios s ";
         $consulta .= "ON s.id = cs.servicioId ";
-        // $consulta .= "WHERE fecha = {$fecha};";
+        $consulta .= "WHERE fecha = '{$fecha}' ";
 
         $citas = AdminCita::SQL($consulta);
 
         $router->render('admin/index', [
             'nombre' => $_SESSION['nombre'],
-            'citas' => $citas
+            'citas' => $citas,
+            'fecha' => $fecha
         ]);
     }
 }

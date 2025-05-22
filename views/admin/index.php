@@ -11,52 +11,75 @@
                 type="date"
                 id="fecha"
                 name="fecha"
+                value="<?php echo $fecha; ?>"
             >
         </div>
     </form>
 </div>
 
+<?php
+
+    if (count($citas) === 0) {
+        echo "<h2>No existen citas para la fecha seleccionada</h2>";
+    }
+
+?>
+
 <div id="citas-admin">
     <ul class="citas">
         <?php
-        $idCita = 0;
-        foreach ($citas as $key => $cita) {
-            
-            if ($idCita !== $cita->id) {
-                $total = 0;
-        ?>
-            <li class="cita">
-                <p>ID: <span><?php echo $cita->id; ?></span></p>
-                <p>Hora: <span><?php echo $cita->hora; ?></span></p>
-                <p>Cliente: <span><?php echo $cita->cliente; ?></span></p>
-                <p>Correo electrónico: <span><?php echo $cita->email; ?></span></p>
-                <p>Teléfono: <span><?php echo $cita->telefono; ?></span></p>
-                <fieldset>
-                <legend><h3>Servicios</h3></legend>
-                <ul class="contenedor-servicios">
-        <?php
-                $idCita = $cita->id;
-            }
+            $idCita = 0;
+            foreach ($citas as $key => $cita) {
+                
+                if ($idCita !== $cita->id) {
+                    $total = 0;
+            ?>
+                <li class="cita">
+                    <p>ID: <span><?php echo $cita->id; ?></span></p>
+                    <p>Hora: <span><?php echo $cita->hora; ?></span></p>
+                    <p>Cliente: <span><?php echo $cita->cliente; ?></span></p>
+                    <p>Correo electrónico: <span><?php echo $cita->email; ?></span></p>
+                    <p>Teléfono: <span><?php echo $cita->telefono; ?></span></p>
+                    <fieldset>
+                    <legend><h3>Servicios</h3></legend>
+                    <ul class="contenedor-servicios">
+            <?php
+                    $idCita = $cita->id;
+                }
 
-            $total += $cita->precio;
-        ?>
-                    <li class="servicio">
-                        <?php echo $cita->servicio; ?> - 
-                        <span class="precio">$ <?php echo $cita->precio; ?></span>
-                    </li>
-        <?php
-            $actual = $cita->id;
-            $proximo = $citas[$key + 1]->id ?? 0;
+                $total += $cita->precio;
+            ?>
+                        <li class="servicio">
+                            <?php echo $cita->servicio; ?> - 
+                            <span class="precio">$ <?php echo $cita->precio; ?></span>
+                        </li>
+            <?php
+                $actual = $cita->id;
+                $proximo = $citas[$key + 1]->id ?? 0;
 
-            if (esUltimo($actual, $proximo)) {
-        ?>
-                </ul>
-                </fieldset>
-                <p class="total">Total: <span>$<?php echo $total; ?></span></p>
-            </li>
-        <?php
+                if (esUltimo($actual, $proximo)) {
+            ?>
+                    </ul>
+                    </fieldset>
+                    <div class="footer-cita">
+                        <p class="total">Total: <span>$<?php echo $total; ?></span></p>    
+                        <form action="/api/eliminar" method="POST">
+                            <input type="hidden" name="id" value="<?php echo $cita->id; ?>">
+                            <input type="submit" class="boton-eliminar" value="Eliminar cita">
+                        </form>
+                    </div>
+                </li>
+            <?php
+                }
             }
-        }
         ?>
     </ul>
 </div>
+
+<?php 
+    $script = "
+        <script src='build/js/buscador.js'></script>
+        <script src='build/js/alertaEliminar.js'></script>
+        <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+    ";
+?>

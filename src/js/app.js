@@ -360,7 +360,6 @@ async function reservarCita() {
     });
 
     const resultado = await respuesta.json();
-    console.log(resultado.resultado);
 
     if (resultado.resultado) {
       Swal.fire({
@@ -370,7 +369,7 @@ async function reservarCita() {
         button: 'OK'
       }).then( () => {
         window.location.reload(); //recarga la página
-      })
+      });
     }
   } catch (error) {
     Swal.fire({

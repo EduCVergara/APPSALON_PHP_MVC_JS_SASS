@@ -46,6 +46,7 @@
       padding: .5rem 1rem;
       background-color: color.adjust($azul, $lightness: -40%);
       border-radius: 1rem;
+      font-size: 2.5rem;
     }
 
     .contenedor-servicios {
@@ -56,7 +57,7 @@
       border-radius: 1rem;
 
       .servicio {
-
+        font-size: 1.8rem;
         .precio {
           background-color: color.adjust($azul, $lightness: -20%);
           padding: 0.3rem 0rem;
@@ -87,6 +88,11 @@
         color: $blanco;
         font-weight: bold;
       }
+    }
+    .footer-cita {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1rem;
     }
   }
 }
