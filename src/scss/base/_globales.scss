@@ -4,7 +4,10 @@
 html {
     font-size: 62.5%;
     box-sizing: border-box;
-    height: 100%; // cortaba el linear gradient
+    // height: 100%; // cortaba el linear gradient
+    @include tablet {
+        height: 100%; // cortaba el linear gradient
+    }
 }
 body {
     display: flex;

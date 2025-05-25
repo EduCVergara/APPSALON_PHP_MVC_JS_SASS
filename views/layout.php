@@ -18,7 +18,7 @@
                     <img src="build/img/BARBER-APP-LOGO-2.png" alt="Gentlemen's Barber Logo">
                 </picture>
             </div>
-            <?php echo $contenido; ?>
+            <?php echo $contenido;?>
         </div>
     </div>
 

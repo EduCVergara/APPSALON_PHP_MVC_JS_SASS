@@ -1,6 +1,8 @@
 <?php 
 
 require_once __DIR__ . '/../includes/app.php';
+require_once __DIR__ . '/../includes/funciones.php';
+cargarEnv();
 
 use Controllers\LoginController;
 use Controllers\CitaController;

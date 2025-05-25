@@ -26,3 +26,15 @@ function isAuth() : void {
         header('Location: /');  
     }
 }
+
+function cargarEnv($ruta = __DIR__ . '/../.env') {
+    if (!file_exists($ruta)) return;
+
+    $lineas = file($ruta, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    foreach ($lineas as $linea) {
+        if (strpos(trim($linea), '#') === 0) continue;
+
+        list($nombre, $valor) = explode('=', $linea, 2);
+        putenv(trim($nombre) . '=' . trim($valor));
+    }
+}

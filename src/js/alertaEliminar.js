@@ -21,9 +21,10 @@ function eliminarCita() {
                 text: "¡Esto no se puede deshacer!",
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Si, eliminar"
+                confirmButtonColor: "#0da6f3",
+                cancelButtonColor: "#cb0000",
+                confirmButtonText: "Si, eliminar",
+                cancelButtonText: "No, cancelar"
                 }).then((result) => {
                 if (result.isConfirmed) {
                     form.submit();

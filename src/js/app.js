@@ -347,10 +347,18 @@ async function reservarCita() {
 
   console.log([...datos]); // console log para saber qué datos me está entregando el FormData.
 
-  // Determina la URL base según dónde estés corriendo la app
-  const API_BASE_URL = window.location.hostname === 'localhost'
-  ? 'http://localhost:3000'
-  : 'https://barberapp.up.railway.app';
+  // Este archivo estará en tu frontend, por ejemplo en main.js o app.js
+  const host = window.location.hostname;
+  const port = 3000;
+
+  const API_BASE_URL =
+  // Si estás en tu PC (localhost) llama a localhost,
+  // en cualquier otro caso (192.168.x.x) llama a la misma IP
+  host === 'localhost'
+    ? `http://localhost:${port}`
+    : host.startsWith('192.168.')
+      ? `http://${host}:${port}`
+      : 'https://barberapp.up.railway.app';
 
   try {
       // Petición hacia la API
@@ -360,7 +368,7 @@ async function reservarCita() {
     });
 
     const resultado = await respuesta.json();
-
+    console.log(resultado);
     if (resultado.resultado) {
       Swal.fire({
         icon: 'success',
