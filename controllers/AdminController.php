@@ -12,6 +12,8 @@ class AdminController {
             session_start();
         }
         isAuth();
+
+        isAdmin();
         
         // Establecemos la timezone para el país correspondiente
         date_default_timezone_set('America/Santiago');

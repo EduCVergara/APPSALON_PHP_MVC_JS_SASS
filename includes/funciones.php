@@ -38,3 +38,9 @@ function cargarEnv($ruta = __DIR__ . '/../.env') {
         putenv(trim($nombre) . '=' . trim($valor));
     }
 }
+
+function isAdmin() : void {
+    if(!isset($_SESSION['admin'])) {
+        header('Location: /');
+    }
+}
