@@ -45,3 +45,79 @@
         }
     }
 }
+
+.contenedor-servicios {
+    background-color: #002b3d;
+    border-radius: 10px;
+    padding: 2rem;
+    margin-top: 2rem;
+    box-shadow: 0 0 10px rgba(0,0,0,0.4);
+    color: $blanco;
+}
+
+.titulo-servicios {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.items-servicios {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.item-servicio {
+    background-color: #005577;
+    border: 2px solid $azul;
+    border-radius: 10px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1.2rem;
+    transition: transform 0.2s ease;
+
+    .acciones {
+        margin-top: 1rem;
+        gap: 1.5rem;
+            .boton {
+            border-radius: 1rem;
+            margin: 0;
+            font-size: 1.6rem;
+            padding: 1rem 3rem;
+                &:hover {
+                    background-color: $blanco;
+                    color: $azul;
+                }
+            }
+            .boton-eliminar {
+                border-radius: 1rem;
+            }
+    }
+
+    &:hover {
+        transform: scale(1.02);
+        background-color: #0077a7;
+    }
+
+    .nombre-servicio {
+        margin: 0.2rem 0;
+        font-size: 2.5rem;
+        
+        @include tablet {
+            font-size: 2rem;
+        }
+    }
+
+    .precio-servicio {
+        font-weight: bold;
+        color: #f8d63c;
+        font-size: 2.2rem;
+        margin: 0.2rem 0;
+        @include tablet {
+            font-size: 2rem;
+        }
+    }
+}
