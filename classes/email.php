@@ -21,19 +21,19 @@ class Email {
         // Creacion del objeto del Email
         $mail = new PHPMailer();
         $mail->isSMTP();
-        $mail->Host = 'sandbox.smtp.mailtrap.io';
+        $mail->Host = $_ENV['EMAIL_HOST'];
         $mail->SMTPAuth = true;
-        $mail->Port = 2525;
-        $mail->Username = '310b00fae8db37';
-        $mail->Password = '31a65250a0d48c';
+        $mail->Port = $_ENV['EMAIL_PORT'];
+        $mail->Username = $_ENV['EMAIL_USER'];
+        $mail->Password = $_ENV['EMAIL_PASS'];
 
         $mail->setFrom('cuentas@salonapp.com');
         $mail->addAddress('cuentas@salonapp.com', 'AppSalon.com');
         $mail->Subject = 'Confirma tu cuenta';
 
         // Configuracion host
-        $ip = getenv('APP_LOCAL_IP') ?: 'localhost';
-        $puerto = getenv('APP_PORT') ?: '3000';
+        $ip = $_ENV['DB_HOST'] ?: 'localhost';
+        $puerto = $_ENV['DB_PORT'] ?: '3000';
         $url = "http://{$ip}:{$puerto}/confirmar-cuenta?token=" . $this->token;
 
         // Setear HTML para el mensaje:
@@ -56,19 +56,19 @@ class Email {
         // Creacion del objeto del Email
         $mail = new PHPMailer();
         $mail->isSMTP();
-        $mail->Host = 'sandbox.smtp.mailtrap.io';
+        $mail->Host = $_ENV['EMAIL_HOST'];
         $mail->SMTPAuth = true;
-        $mail->Port = 2525;
-        $mail->Username = '310b00fae8db37';
-        $mail->Password = '31a65250a0d48c';
+        $mail->Port = $_ENV['EMAIL_PORT'];
+        $mail->Username = $_ENV['EMAIL_USER'];
+        $mail->Password = $_ENV['EMAIL_PASS'];
 
         $mail->setFrom('cuentas@salonapp.com');
         $mail->addAddress('cuentas@salonapp.com', 'AppSalon.com');
         $mail->Subject = 'Restablece tu contraseña';
 
         // Setear HTML para el mensaje:
-        $ip = getenv('APP_LOCAL_IP') ?: 'localhost';
-        $puerto = getenv('APP_PORT') ?: '3000';
+        $ip = $_ENV['DB_HOST'] ?: 'localhost';
+        $puerto = $_ENV['DB_PORT'] ?: '3000';
         $url = "http://{$ip}:{$puerto}/recuperar?token=" . $this->token;
         $mail->isHTML(TRUE);
         $mail->CharSet = 'UTF-8';

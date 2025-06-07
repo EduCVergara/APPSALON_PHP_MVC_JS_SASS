@@ -67,8 +67,12 @@
     padding: 0;
     margin: 0;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(1, 1fr);
     gap: 1rem;
+    @include tablet {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
 }
 
 .item-servicio {
@@ -84,13 +88,16 @@
         gap: 1.5rem;
             .boton {
             border-radius: 1rem;
-            margin: 0;
+            margin-bottom: 1rem;
             font-size: 1.6rem;
             padding: 1rem 3rem;
                 &:hover {
                     background-color: $blanco;
                     color: $azul;
                 }
+            @include tablet {
+                margin: 0;
+            }
             }
             .boton-eliminar {
                 border-radius: 1rem;

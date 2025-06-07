@@ -3,10 +3,10 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function iniciarAppEliminar() {
-    eliminarCita();
+    eliminar();
 }
 
-function eliminarCita() {
+function eliminar() {
     const botonesEliminar = document.querySelectorAll('.boton-eliminar');
 
     botonesEliminar.forEach(boton => {
@@ -17,7 +17,7 @@ function eliminarCita() {
             
             try {
                 Swal.fire({
-                title: "¿Estás seguro que desea eliminar la cita?",
+                title: "¿Estás seguro que desea eliminar el elemento?",
                 text: "¡Esto no se puede deshacer!",
                 icon: "warning",
                 showCancelButton: true,
@@ -29,8 +29,8 @@ function eliminarCita() {
                 if (result.isConfirmed) {
                     form.submit();
                     Swal.fire({
-                    title: "¡Cita eliminada!",
-                    text: "La cita ha sido eliminada correctamente.",
+                    title: "¡Elemento eliminado!",
+                    text: "Se ha eliminado correctamente.",
                     icon: "success"
                     }).then( () => {
                         window.location.reload(); //recarga la página
@@ -41,7 +41,7 @@ function eliminarCita() {
                 Swal.fire({
                 icon: "error",
                 title: "Error",
-                text: "Hubo un error al eliminar la cita"
+                text: "Hubo un error al eliminar el elemento"
                 });
             }
         })

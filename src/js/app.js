@@ -122,11 +122,7 @@ function paginaSiguiente() {
 
 async function consultarAPI() { // Ejecutar dos funciones simultáneamente (Async)
   try {
-    const baseURL = window.location.hostname.includes('localhost')
-      ? 'http://localhost:3000'
-      : ''; // En producción, usa la misma raíz
-
-    const url = `${baseURL}/api/servicios`;
+    const url = `${location.origin}/api/servicios`;
     const resultado = await fetch(url); // Await espera a que termine el fetch para seguir avanzando
     const servicios = await resultado.json();
     mostrarServicios(servicios);
@@ -345,24 +341,9 @@ async function reservarCita() {
   datos.append('usuarioId', id);
   datos.append('servicios', idServicios);
 
-  console.log([...datos]); // console log para saber qué datos me está entregando el FormData.
-
-  // Este archivo estará en tu frontend, por ejemplo en main.js o app.js
-  const host = window.location.hostname;
-  const port = 3000;
-
-  const API_BASE_URL =
-  // Si estás en tu PC (localhost) llama a localhost,
-  // en cualquier otro caso (192.168.x.x) llama a la misma IP
-  host === 'localhost'
-    ? `http://localhost:${port}`
-    : host.startsWith('192.168.')
-      ? `http://${host}:${port}`
-      : 'https://barberapp.up.railway.app';
-
   try {
       // Petición hacia la API
-    const respuesta = await fetch(`${API_BASE_URL}/api/citas`, {
+    const respuesta = await fetch(`${location.origin}/api/citas`, {
       method: 'POST',
       body: datos // body: Cuerpo de la petición que se va a enviar
     });

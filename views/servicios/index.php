@@ -58,3 +58,10 @@
         <?php endforeach; ?>
     </ul>
 </div>
+
+<?php 
+    $script = "
+        <script src='build/js/alertaEliminar.js'></script>
+        <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+    ";
+?>

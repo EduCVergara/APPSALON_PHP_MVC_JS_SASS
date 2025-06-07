@@ -12,7 +12,13 @@ if(getenv('RAILWAY_ENVIRONMENT') || getenv('MYSQLHOST')) {
     $db = new mysqli($host, $user, $password, $database, (int)$port);
 } else {
     // Entorno local
-    $db = new mysqli('localhost', 'root', 'root', 'appsalon_mvc');
+    $db = new mysqli(
+        $_ENV['DB_HOST'], 
+        $_ENV['DB_USER'], 
+        $_ENV['DB_PASS'], 
+        $_ENV['DB_NAME'],
+        (int) $_ENV['DB_PORT']
+    );
 }
 $db->set_charset("utf8");
 
